@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using AutoMapper;
 using AzureStorage.Tables;
 using Common.Log;
 using Lykke.Common.ApiLibrary.Middleware;
@@ -51,6 +52,9 @@ namespace Lykke.Service.LocalizedMessages
                 {
                     options.DefaultLykkeConfiguration("v1", "LocalizedMessages API");
                 });
+
+                Mapper.Initialize(x => x.AddProfiles(GetType().Assembly));
+                Mapper.Configuration.AssertConfigurationIsValid();
 
                 var builder = new ContainerBuilder();
                 var appSettings = Configuration.LoadSettings<AppSettings>();

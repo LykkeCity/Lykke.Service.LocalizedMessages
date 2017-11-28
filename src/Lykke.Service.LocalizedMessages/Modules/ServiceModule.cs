@@ -1,6 +1,10 @@
 ﻿using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using AzureStorage.Tables;
 using Common.Log;
+using Lykke.Service.LocalizedMessages.AzureRepositories.Message;
+using Lykke.Service.LocalizedMessages.Core.Domain;
+using Lykke.Service.LocalizedMessages.Core.Domain.Messages;
 using Lykke.Service.LocalizedMessages.Core.Services;
 using Lykke.Service.LocalizedMessages.Core.Settings.ServiceSettings;
 using Lykke.Service.LocalizedMessages.Services;
@@ -47,6 +51,15 @@ namespace Lykke.Service.LocalizedMessages.Modules
                 .As<IShutdownManager>();
 
             // TODO: Add your dependencies here
+
+            var dbSettings = _settings.Nested(x => x.Db);
+
+            builder.RegisterInstance<IMessageRepository>(
+                new MessageRepository(
+                    AzureTableStorage<MessageLocalizedEntity>.Create(
+                        dbSettings.ConnectionString(x => x.MessageConnString), dbSettings.CurrentValue.MessageTable, _log)
+                    )
+            );
 
             builder.Populate(_services);
         }
