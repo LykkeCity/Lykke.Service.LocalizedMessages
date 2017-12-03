@@ -2,7 +2,7 @@
 
 namespace Lykke.Service.LocalizedMessages.Core.Domain.OneSky
 {
-    public interface IProject
+    public interface ILykkeProject
     {
         int Id { get; set; }
         string Name { get; set; }

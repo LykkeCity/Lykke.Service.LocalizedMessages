@@ -15,11 +15,12 @@ namespace Lykke.Service.LocalizedMessages.Services.OneSky
             _settings = settings;
         }
 
-        public Task<IProject> GetProjects()
+        public Task<ILykkeProject> GetProjects()
         {
             var client = Lykke.OneSky.Json.OneSkyClient.CreateClient(
                 _settings.PublicKey, _settings.SecretKey);
-            throw new System.NotImplementedException();
+
+            var projectList = client.Platform.ProjectGroup.List()
         }
 
         public Task<Dictionary<string, string>> ExportMessages(int projectId, string fileName, string locale)

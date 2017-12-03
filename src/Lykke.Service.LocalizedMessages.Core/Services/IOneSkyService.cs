@@ -9,7 +9,7 @@ namespace Lykke.Service.LocalizedMessages.Core.Services
     /// </summary>
     public interface IOneSkyService
     {
-        Task<IProject> GetProjects();
+        Task<ILykkeProject> GetProjects();
         Task<Dictionary<string, string>> ExportMessages(int projectId, string fileName, string locale);
     }
 }
